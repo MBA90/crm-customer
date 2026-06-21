@@ -1,4 +1,4 @@
-package com.mba.crm_customer;
+package com.mba.crm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
