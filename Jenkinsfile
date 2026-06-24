@@ -1,16 +1,24 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9-eclipse-temurin-21-alpine'
-            args '-v $HOME/.m2:/root/.m2'
-        }
+    agent any
+
+    tools {
+        // Name must match a JDK 21 installation configured in
+        // Manage Jenkins → Tools → JDK installations
+        jdk 'jdk-21'
+    }
+
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 30, unit: 'MINUTES')
     }
 
     stages {
 
         stage('Build') {
             steps {
-                sh './mvnw package -DskipTests -q'
+                sh 'chmod +x mvnw'
+                sh './mvnw clean package -DskipTests -q'
             }
             post {
                 success {
