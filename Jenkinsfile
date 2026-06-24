@@ -24,7 +24,7 @@ pipeline {
                 success {
                     archiveArtifacts artifacts: 'target/crm-customer-*.jar', fingerprint: true
                 }
-            }
+            } 
         }
 
         stage('Test') {
