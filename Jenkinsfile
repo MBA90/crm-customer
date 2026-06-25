@@ -57,18 +57,16 @@ pipeline {
 
                         // Build the Docker image
                         sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
-                        sh "docker tag ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest"
 
-                        // Push tags
+                        // Push tag
                         sh "docker push ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
-                        sh "docker push ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest"
                     }
                 }
             }
             post {
                 always {
-                    // Clean up local images to save space on your machine
-                    sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest || true"
+                    // Clean up local image to save space on your machine
+                    sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} || true"
                 }
             }
         }
