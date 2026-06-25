@@ -17,8 +17,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'chmod +x mvnw'
-                sh './mvnw clean package -DskipTests -q'
+                sh 'mvn clean package -DskipTests -q'
             }
             post {
                 success {
@@ -29,7 +28,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh './mvnw test -q'
+                sh 'mvn test -q'
             }
             post {
                 always {
