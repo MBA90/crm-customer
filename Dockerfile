@@ -2,8 +2,10 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-ADD target/*.jar /app.jar
+# Change /app.jar to app.jar so it lands inside the /app folder
+ADD target/*.jar app.jar
 
-EXPOSE 8080
+# Your application runs on 8080 inside the container
+EXPOSE 8201
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
