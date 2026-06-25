@@ -5,6 +5,7 @@ pipeline {
         // Name must match a JDK 21 installation configured in
         // Manage Jenkins → Tools → JDK installations
         jdk 'jdk-21'
+        maven 'maven-3.9'
     }
 
     options {
