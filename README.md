@@ -65,32 +65,6 @@ Base path: `/api/customers`
 | `PUT`    | `/api/customers/{refNo}`  | Update a customer          | 200     |
 | `DELETE` | `/api/customers/{refNo}`  | Delete a customer          | 204     |
 
-Customers are addressed by their generated `customerRefNo`.
-
-### Customer payload
-
-```json
-{
-  "firstName": "Jane",
-  "lastName": "Doe",
-  "email": "jane.doe@example.com",
-  "phone": "+1-555-0100",
-  "status": "ACTIVE"
-}
-```
-
-`firstName`, `lastName`, `email` (valid format), and `status` are required.
-`status` is one of `ACTIVE` or `INACTIVE`. The `customerRefNo`, `createdAt`, and
-`updatedAt` fields are read-only and set by the service.
-
-### Example
-
-```bash
-curl -X POST http://localhost:8201/api/customers \
-  -H 'Content-Type: application/json' \
-  -d '{"firstName":"Jane","lastName":"Doe","email":"jane.doe@example.com","status":"ACTIVE"}'
-```
-
 ## Docker
 
 ```bash
