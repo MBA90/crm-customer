@@ -14,9 +14,14 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
     }
 
+    parameters {
+        string(name: 'DOCKER_HUB_USER',
+               defaultValue: 'mba90',
+               description: 'Docker Hub username / namespace to push the image to')
+    }
+
     environment {
-            // ⚠️ CHANGE THIS to your actual Docker Hub username
-            DOCKER_HUB_USER = 'mba90'
+            DOCKER_HUB_USER = "${params.DOCKER_HUB_USER}"
             IMAGE_NAME      = 'crm-customer'
             IMAGE_TAG       = "${BUILD_NUMBER}"
 
