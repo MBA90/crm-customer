@@ -50,7 +50,8 @@ class CustomerControllerTest {
                 "0501234567",
                 CustomerStatus.ACTIVE,
                 LocalDateTime.now(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "test","test"
         );
 
         requestDTO = new CustomerDTO(
@@ -62,7 +63,8 @@ class CustomerControllerTest {
                 "0501234567",
                 CustomerStatus.ACTIVE,
                 null,
-                null
+                null,
+                "test","test"
         );
     }
 
@@ -126,7 +128,7 @@ class CustomerControllerTest {
 
     @Test
     void create_returns400_whenRequiredFieldsMissing() throws Exception {
-        CustomerDTO invalidDTO = new CustomerDTO(null, null, null, null, null, null, null, null, null);
+        CustomerDTO invalidDTO = new CustomerDTO(null, null, null, null, null, null, null, null, null, null, null);
 
         mockMvc.perform(post("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -142,7 +144,7 @@ class CustomerControllerTest {
     void create_returns400_whenEmailIsInvalid() throws Exception {
         CustomerDTO invalidDTO = new CustomerDTO(
                 null, null, "John", "Doe", "not-an-email",
-                null, CustomerStatus.ACTIVE, null, null
+                null, CustomerStatus.ACTIVE, null, null,null,null
         );
 
         mockMvc.perform(post("/api/customers")

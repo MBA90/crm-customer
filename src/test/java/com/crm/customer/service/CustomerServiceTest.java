@@ -58,7 +58,9 @@ class CustomerServiceTest {
                 "0501234567",
                 CustomerStatus.ACTIVE,
                 LocalDateTime.now(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "test",
+                "test"
         );
     }
 
@@ -136,7 +138,7 @@ class CustomerServiceTest {
     void update_returnsUpdatedCustomer_whenValidRequest() {
         CustomerDTO updatedDTO = new CustomerDTO(
                 null, "CUST-1", "Jane", "Doe", "john.doe@example.com",
-                "0509999999", CustomerStatus.INACTIVE, LocalDateTime.now(), LocalDateTime.now()
+                "0509999999", CustomerStatus.INACTIVE, LocalDateTime.now(), LocalDateTime.now() ,"test","test"
         );
         given(customerRepository.findByCustomerRefNo("CUST-1")).willReturn(Optional.of(customer));
         given(customerRepository.save(customer)).willReturn(customer);
@@ -163,7 +165,7 @@ class CustomerServiceTest {
     void update_throwsIllegalStateException_whenEmailTakenByAnotherCustomer() {
         CustomerDTO dtoWithNewEmail = new CustomerDTO(
                 null, "CUST-1", "John", "Doe", "other@example.com",
-                "0501234567", CustomerStatus.ACTIVE, LocalDateTime.now(), LocalDateTime.now()
+                "0501234567", CustomerStatus.ACTIVE, LocalDateTime.now(), LocalDateTime.now(),"test","test"
         );
         given(customerRepository.findByCustomerRefNo("CUST-1")).willReturn(Optional.of(customer));
         given(customerRepository.existsByEmailAndCustomerRefNoNot("other@example.com", "CUST-1")).willReturn(true);
