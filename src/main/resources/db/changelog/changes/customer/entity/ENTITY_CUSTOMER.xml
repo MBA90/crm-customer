@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="create-customers-sequence" author="mba">
+        <createSequence sequenceName="CUSTOMERS_SEQ"
+                        startValue="1"
+                        incrementBy="1"
+                        cacheSize="0"
+                        cycle="false"/>
+        <rollback>
+            DROP SEQUENCE CUSTOMERS_SEQ
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-customers-table" author="mba">
+        <createTable tableName="customers">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="CUSTOMERS_SEQ" />
+            </column>
+            <column name="first_name" type="varchar2(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar2(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="varchar2(20)"/>
+            <column name="status" type="varchar2(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_ref_no" type="varchar2(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" type="varchar(50)"/>
+            <column name="CREATED_AT" type="timestamp"/>
+            <column name="UPDATED_AT" type="timestamp"/>
+
+        </createTable>
+
+        <rollback>
+            DROP TABLE CUSTOMERS
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-customers-indexes" author="mba">
+        <createIndex indexName="UQ_CUSTOMERS_EMAIL" tableName="CUSTOMERS" unique="true">
+            <column name="EMAIL" />
+        </createIndex>
+        <createIndex indexName="UQ_CUSTOMERS_REF_NO" tableName="CUSTOMERS" unique="true">
+            <column name="CUSTOMER_REF_NO" />
+        </createIndex>
+        <rollback>
+            DROP INDEX UQ_CUSTOMERS_REF_NO
+        </rollback>
+        <rollback>
+            DROP INDEX UQ_CUSTOMERS_EMAIL
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
