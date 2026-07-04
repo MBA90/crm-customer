@@ -39,7 +39,7 @@ public class CustomerService {
                     return new NoSuchElementException("Customer not found: " + customerRefNo);
                 });
     }
-
+ 
     @Transactional
     public CustomerDTO create(CustomerDTO dto) {
         log.info("Creating customer with email: {}", dto.email());
