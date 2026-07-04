@@ -27,31 +27,27 @@
                 <constraints nullable="false"/>
             </column>
             <column name="email" type="varchar2(255)">
-                <constraints unique="true" nullable="false"/>
+                <constraints nullable="false"/>
             </column>
             <column name="phone" type="varchar2(20)"/>
             <column name="status" type="varchar2(20)">
                 <constraints nullable="false"/>
             </column>
             <column name="customer_ref_no" type="varchar2(20)">
-                <constraints unique="true" nullable="false"/>
+                <constraints nullable="false"/>
             </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" type="varchar(50)"/>
+            <column name="CREATED_AT" type="timestamp"/>
+            <column name="UPDATED_AT" type="timestamp"/>
 
         </createTable>
 
         <rollback>
             DROP TABLE CUSTOMERS
         </rollback>
-    </changeSet>
-
-    <changeSet id="create-customers-table-audit" author="Zaid izziddine">
-        <addColumn tableName="customers">
-            <column name="created_by" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="last_modified_by" type="varchar(50)"/>
-            <column name="last_modified_date" type="timestamp"/>
-        </addColumn>
     </changeSet>
 
     <changeSet id="create-customers-indexes" author="mba">

@@ -44,6 +44,13 @@ public class Customer {
     @Column(name = "UPDATED_AT")
     private LocalDateTime updatedAt;
 
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
+
+
     @PrePersist
     protected void onCreate() {
         customerRefNo = "CUST-" + id;
@@ -54,5 +61,6 @@ public class Customer {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+        updatedBy = updatedBy == null ? null : updatedBy;
     }
 }
