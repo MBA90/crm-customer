@@ -67,17 +67,31 @@ Base path: `/api/customers`
 
 ## Docker
 
-```bash
-# Build the jar first
-./mvnw clean package -DskipTests
+A `Dockerfile` is provided that packages the built JAR on top of an
+`eclipse-temurin:21-jre-alpine` base image. Build the JAR first, then the image:
 
-# Build and run the image
+```bash
+./mvnw clean package
 docker build -t crm-customer .
-docker run -p 8201:8201 crm-customer
+```
+
+Run the container, mapping the service's port (8201):
+
+```bash
+docker run --rm -p 8201:8201 crm-customer
 ```
 
 ## CI/CD
 
-A `Jenkinsfile` defines a pipeline that builds the jar, runs tests (publishing
-JUnit reports), then builds and pushes a Docker image tagged with the build
-number to Docker Hub.
+A `Jenkinsfile` defines a declarative pipeline that:
+
+- **Build** — runs `mvn clean package -DskipTests` and archives the resulting JAR.
+- **Test** — runs `mvn test` and publishes the JUnit surefire reports.
+- **Docker Build & Push** — logs in to Docker Hub, builds the image tagged with
+  the Jenkins `BUILD_NUMBER`, and pushes it, then removes the local image
+  afterward.
+
+The pipeline requires JDK 21 (`jdk-21`) and Maven (`maven-3.9`) tool
+installations configured in Jenkins, plus a `docker-hub-credentials`
+username/password credential. Update the `DOCKER_HUB_USER` build parameter (or
+its default) in the `Jenkinsfile` to your own Docker Hub account.

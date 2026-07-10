@@ -36,5 +36,8 @@ public record CustomerDTO(
         LocalDateTime createdAt,
 
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+
+        String createdBy,
+        String updatedBy
 ) {}
