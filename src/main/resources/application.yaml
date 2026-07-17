@@ -2,11 +2,31 @@ spring:
   application:
     name: crm-customer
 
+#  datasource:
+#    url: jdbc:oracle:thin:@localhost:1521/ORCLPDB1
+#    username: crm_customer
+#    password: admin
+#    driver-class-name: oracle.jdbc.OracleDriver
+#
+#  jpa:
+#    open-in-view: false
+#    hibernate:
+#      ddl-auto: none
+#    show-sql: false
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.OracleDialect
+#        format_sql: true
+
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521/ORCLPDB1
+    url: jdbc:postgresql://localhost:5432/crm
     username: crm_customer
     password: admin
-    driver-class-name: oracle.jdbc.OracleDriver
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      auto-commit: false
 
   jpa:
     open-in-view: false
@@ -15,8 +35,9 @@ spring:
     show-sql: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.OracleDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        default_schema: crm_customer
 
   liquibase:
     change-log: classpath:db/changelog/master.xml
@@ -24,3 +45,7 @@ spring:
 
 server:
   port: 8201
+
+logging:
+  level:
+    org.hibernate.orm.connections.pooling: warn
