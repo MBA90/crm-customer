@@ -1,14 +1,14 @@
 # CRM Customer Service
 
 A Spring Boot microservice for managing CRM customer data. It exposes a REST API
-for CRUD operations over customers, backed by an Oracle database with schema
+for CRUD operations over customers, backed by a PostgreSQL database with schema
 managed by Liquibase.
 
 ## Tech Stack
 
 - Java 21
 - Spring Boot 3.5.15 (Web, Data JPA, Validation)
-- Oracle Database (`ojdbc11`)
+- PostgreSQL (`postgresql` JDBC driver)
 - Liquibase (schema migrations)
 - MapStruct 1.5.5 (entity/DTO mapping)
 - Lombok
@@ -20,23 +20,51 @@ managed by Liquibase.
 
 - Java 21+
 - Maven 3.9+ (or use the included Maven Wrapper)
-- A reachable Oracle database
+- Docker & Docker Compose (for the PostgreSQL database)
 
 ### Configuration
 
 Connection and server settings live in `src/main/resources/application.yaml`.
 Defaults:
 
-| Setting        | Default                                     |
-|----------------|---------------------------------------------|
-| Server port    | `8201`                                      |
-| Datasource URL | `jdbc:oracle:thin:@localhost:1521/ORCLPDB1` |
-| Username       | `crm_customer`                              |
-| Schema         | `crm_customer`                              |
+| Setting        | Default                                |
+|----------------|----------------------------------------|
+| Server port    | `8201`                                 |
+| Datasource URL | `jdbc:postgresql://localhost:5432/crm` |
+| Username       | `crm_customer`                         |
+| Schema         | `crm_customer`                         |
 
 Liquibase runs on startup using `classpath:db/changelog/master.xml` to create the
 `CUSTOMERS` table, sequence, and indexes. JPA `ddl-auto` is `none` — the schema is
 owned entirely by Liquibase.
+
+### Database Setup
+
+A `docker-compose.yml` at the project root starts a PostgreSQL 16 instance
+(container `postgres_db`) with a superuser `admin` / `admin` and a `crm`
+database, exposed on port `5432`:
+
+```bash
+docker compose up -d
+```
+
+The compose file only creates the `admin` superuser and `crm` database. The
+application connects as a dedicated `crm_customer` role that owns its own schema,
+so after the container is up, create the role and schema once:
+
+```sql
+
+CREATE USER crm_customer
+  WITH PASSWORD 'admin';
+
+CREATE SCHEMA crm_customer
+  AUTHORIZATION crm_customer;
+
+```
+Run them against the `crm` database.
+
+With the role and schema in place, Liquibase can create its tracking tables and
+apply the changelog on the next application start.
 
 ### Build & Run
 
