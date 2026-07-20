@@ -2,22 +2,6 @@ spring:
   application:
     name: crm-customer
 
-#  datasource:
-#    url: jdbc:oracle:thin:@localhost:1521/ORCLPDB1
-#    username: crm_customer
-#    password: admin
-#    driver-class-name: oracle.jdbc.OracleDriver
-#
-#  jpa:
-#    open-in-view: false
-#    hibernate:
-#      ddl-auto: none
-#    show-sql: false
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.OracleDialect
-#        format_sql: true
-
   datasource:
     url: jdbc:postgresql://localhost:5432/crm
     username: crm_customer
